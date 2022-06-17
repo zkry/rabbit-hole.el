@@ -141,7 +141,7 @@
         (message "%s" (rabbit-hole--get-tree))))
 
 (defun rabbit-hole-continue (item)
-  (interactive "sName of text task:")
+  (interactive "sName of next task:")
   (save-excursion
     (with-no-warnings (set-buffer (find-file-noselect rabbit-hole-file)))
     (save-restriction
