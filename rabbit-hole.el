@@ -37,19 +37,22 @@
 (defconst rabbit-hole-mode-name "Rabbit-Hole")
 
 (defcustom rabbit-hole-indentation 2
-  ""
+  "The amount of indentation of each deeper level."
   :group 'rabbit-hole)
 
 (defcustom rabbit-hole-file "~/Dropbox/org/refile.org"
-  ""
+  "File to save rabbit-hole tree in."
   :group 'rabbit-hole)
 
 (defcustom rabbit-hole-header "Rabbit Hole"
-  ""
+  "Header under which to store task tree.
+
+This header is located in the file stored in the variable
+`rabbit-hole-file'."
   :group 'rabbit-hole)
 
 (defcustom rabbit-hole-message-on-action t
-  ""
+  "When non-nil, message the most recent tree when running a command."
   :group 'rabbit-hole)
 
 (defface rabbit-hole-current-task-face
@@ -58,6 +61,7 @@
   :group 'rabbit-hole)
 
 (defun rabbit-hole--narrow-to-subtree ()
+  "Helper function to find subtree and narrow to it."
   (widen)
   (goto-char (point-min))
   (let ((header-found-p (search-forward (concat "* " rabbit-hole-header) nil t)))
@@ -67,6 +71,7 @@
     (goto-char (point-min))))
 
 (defun rabbit-hole--fontify-last-item ()
+  "Fontify the last item in the rabbit-hole task tree."
   (with-current-buffer "*rabbit-hole*"
     (when (save-excursion (goto-char (point-max))
                           (search-backward "- " nil t))
@@ -82,7 +87,7 @@
         (add-text-properties start end '(face rabbit-hole-current-task-face))))))
 
 (defun rabbit-hole--update-buffer ()
-  ""
+  "Refresh the contents of the rabbit-hole buffer."
   (let ((rabbit-hole-text nil))
     (save-excursion
       (with-no-warnings (set-buffer (find-file-noselect rabbit-hole-file)))
@@ -102,7 +107,7 @@
       (goto-char (point-max)))))
 
 (defun rabbit-hole--get-tree ()
-  ""
+  "Return the text of the current rabbit-hole tree."
   (let ((rabbit-hole-text nil))
     (save-excursion
       (with-no-warnings (set-buffer (find-file-noselect rabbit-hole-file)))
@@ -114,10 +119,12 @@
           (string-trim (buffer-substring start (point))))))))
 
 (defun rabbit-hole--display-message-p ()
+  "Return non-nil if message should be displayed of task tree."
   (and rabbit-hole-message-on-action
        (not (equal (buffer-name) "*rabbit-hole*"))))
 
 (defun rabbit-hole-go-deeper (item)
+  "Add ITEM as a new task for a deeper context."
   (interactive "sName of new excursion:")
   (save-excursion
     (with-no-warnings (set-buffer (find-file-noselect rabbit-hole-file)))
@@ -141,6 +148,7 @@
         (message "%s" (rabbit-hole--get-tree))))
 
 (defun rabbit-hole-continue (item)
+  "Add ITEM task on the same level as the topmost item."
   (interactive "sName of next task:")
   (save-excursion
     (with-no-warnings (set-buffer (find-file-noselect rabbit-hole-file)))
@@ -164,6 +172,7 @@
     (message "%s" (rabbit-hole--get-tree))))
 
 (defun rabbit-hole-pop ()
+  "Remove the topmost context item in the rabbit-tree."
   (interactive)
   (save-excursion
     (with-no-warnings (set-buffer (find-file-noselect rabbit-hole-file)))

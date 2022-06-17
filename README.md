@@ -1,7 +1,5 @@
 # rabbit-hole.el
 
-Origin: https://emacs.stackexchange.com/questions/51161/create-a-rabbit-hole-task-stack-that-can-be-pushed-popped
-
 A micro task-manager for managing nested stacks of tasks.
 
 # Demo
@@ -12,6 +10,15 @@ A micro task-manager for managing nested stacks of tasks.
 
 This package is not on MELPA so it must be installed manually (ie by
 adding rabbit-hole.el to your load path).
+
+# Configuration
+
+You will need to configure the following settings:
+
+- `rabbit-hole-file` should be an org-mode file that contains where
+  you want to store your task tree.
+- `rabbit-hole-header` should be the text of the headline under which
+  you want to save your task tree.
 
 # Usage
 
