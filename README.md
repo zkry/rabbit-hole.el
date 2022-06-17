@@ -6,7 +6,7 @@ A micro task-manager for managing nested stacks of tasks.
 
 # Demo
 
-![rabbit-hole UI](./docs/rabbit-hole.gif)
+<img src="https://github.com/zkry/rabbit-hole.el/raw/master/docs/rabbit-hole.gif" width="400" />
 
 # Installation
 
